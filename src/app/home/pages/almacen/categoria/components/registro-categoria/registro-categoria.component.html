@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="modalCenterTitle">Agregar Categoría</h5>
+  <button
+    type="button"
+    class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-12">
+      <label for="categoria" class="form-label">Descripción *</label>
+      <input
+        type="text"
+        id="categoria"
+        class="form-control text-uppercase"
+        placeholder="Ingrese Categoría"
+        [formControl]="frmCategoria"
+        />
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">
+    Cancelar
+  </button>
+  <button type="submit" class="btn btn-primary" (click)="fnGuardarCategoria()">Guardar</button>
+</div>

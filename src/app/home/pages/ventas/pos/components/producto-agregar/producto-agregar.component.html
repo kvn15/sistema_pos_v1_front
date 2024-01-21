@@ -1,0 +1,56 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="modalCenterTitle">Buscar Producto</h5>
+  <button
+    type="button"
+    class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <div class="row">
+    <div class="col-12">
+      <form class="row">
+        <div class="col-md-6 mb-2 mb-md-0">
+          <input type="text" class="form-control" placeholder="Buscar Nombre de Producto o Código de Barras">
+        </div>
+        <div class="col-md-3 mb-2 mb-md-0">
+          <ng-select placeholder="Categoria">
+            <ng-option>IGV</ng-option>
+            <ng-option>EXO</ng-option>
+          </ng-select>
+        </div>
+        <div class="col-md-3 mb-2 mb-md-0">
+          <ng-select placeholder="Unidad Medida">
+            <ng-option>IGV</ng-option>
+            <ng-option>EXO</ng-option>
+          </ng-select>
+        </div>
+      </form>
+    </div>
+    <div class="col-12 mt-3">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Acción</th>
+              <th>Código</th>
+              <th>Producto</th>
+              <th>Categoria</th>
+              <th>Stock</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of lListaProductos">
+              <td>
+                <button class="btn btn-dark" (click)="_servicePos.fnAnadirProductoTabla(item)">Agregar</button>
+              </td>
+              <td>{{ item.codigo_barras }}</td>
+              <td>{{ item.nombre_producto }}</td>
+              <td>{{ item.name_categoria }}</td>
+              <td>{{ item.stock_final }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

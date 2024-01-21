@@ -1,0 +1,80 @@
+<div class="card">
+  <form class="row card-body">
+      <div class="col-md-2 mb-3">
+        <ng-select placeholder="Impuesto">
+          <ng-option selected>IGV</ng-option>
+          <ng-option>EXO</ng-option>
+        </ng-select>
+      </div>
+      <div class="col-md-10 mb-3">
+        <input type="text" class="form-control" placeholder="Buscar Código de Barras">
+      </div>
+      <div class="col-md-6 mb-2 mb-md-0">
+        <button class="btn btn-primary w-100" (click)="fnBuscarProductoDialog()">Buscar Producto</button>
+      </div>
+      <div class="col-md-6">
+        <button class="btn btn-secondary w-100">Crear Producto Rapido</button>
+      </div>
+  </form>
+</div>
+<br>
+<div class="card">
+  <div class="card-body">
+    <p>Total de Productos Agregados: {{_service.arrayProductoVenta.controls.length}}</p>
+    <ng-container [formGroup]="_service.formProductos">
+      <ng-container formArrayName="array_producto">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th style="width: 5%;">#</th>
+                <th style="width: 20%;">Producto</th>
+                <th style="width: 20%;">Unidad Medida</th>
+                <th style="width: 5%;">Cantidad</th>
+                <th style="width: 5%;">Precio</th>
+                <th style="width: 5%;">Descuento(%)</th>
+                <th style="width: 5%;">SubTotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="_service.arrayProductoVenta.controls.length === 0">
+                <td colspan="7">
+                  <p class="m-0">No hay productos agregados.</p>
+                </td>
+              </tr>
+              <ng-container *ngFor="let item of _service.arrayProductoVenta.controls; let i = index">
+                <tr [formGroupName]="i">
+                  <td><button class="btn btn-sm btn-danger" (click)="_service.fnEliminarLineaTabla(i)">X</button></td>
+                  <td style="width: 15%;">{{ item.value.nombre_producto }}</td>
+                  <td>
+                    <!-- Unidad Medida -->
+                    <div class="w-100">
+                      <ng-select formControlName="unidad_medida_id" (change)="onChangeUnidadMedida($event, item)" appendTo="body">
+                        <ng-option *ngFor="let item2 of item.value.unidadMedida" [value]="item2">
+                          {{ item2.unidad_medida }}
+                        </ng-option>
+                      </ng-select>
+                    </div>
+                  </td>
+                  <td>
+                    <input type="number" class="form-control" formControlName="cantidad">
+                  </td>
+                  <td>
+                    {{ item.value.precio }}
+                  </td>
+                  <td>
+                    <input type="number" step="any" class="form-control" formControlName="dsct">
+                  </td>
+                  <td>
+                    {{ item.value.subtotal }}
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+    </ng-container>
+
+  </div>
+</div>

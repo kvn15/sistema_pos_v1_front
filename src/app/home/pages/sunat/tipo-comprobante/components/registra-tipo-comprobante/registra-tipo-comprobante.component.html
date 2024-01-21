@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="modalCenterTitle">Agregar Tipo de Comprobante</h5>
+  <button
+    type="button"
+    class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="frmTComprobante" class="row">
+    <div class="col-md-12 mb-2">
+      <label for="documento" class="form-label">Documento *</label>
+      <input
+        type="text"
+        id="documento"
+        class="form-control text-uppercase"
+        placeholder="Ingrese Documento"
+        formControlName="documento"
+        [ngClass]="{'is-invalid': frmTComprobante.get('documento')?.touched && frmTComprobante.get('documento')?.invalid}"
+        />
+        <div class="invalid-feedback" *ngIf="frmTComprobante.get('documento')?.hasError('required')"> El Documento es requerido. </div>
+    </div>
+    <div class="col-md-12">
+      <label for="serie" class="form-label">Serie *</label>
+      <input
+        type="text"
+        id="serie"
+        class="form-control text-uppercase"
+        placeholder="Ingrese Serie"
+        formControlName="serie"
+        [ngClass]="{'is-invalid': frmTComprobante.get('serie')?.touched && frmTComprobante.get('serie')?.invalid}"
+        />
+        <div class="invalid-feedback" *ngIf="frmTComprobante.get('serie')?.hasError('required')"> La Serie es requerido. </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">
+    Cancelar
+  </button>
+  <button type="submit" class="btn btn-primary" (click)="fnGuardar()">Guardar</button>
+</div>

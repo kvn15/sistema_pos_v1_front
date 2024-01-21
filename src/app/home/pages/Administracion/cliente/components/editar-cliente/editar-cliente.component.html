@@ -1,0 +1,88 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="modalCenterTitle">Editar Cliente</h5>
+  <button
+    type="button"
+    class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="formCliente" class="row">
+    <div class="col-md-4 col-lg-3 mb-3">
+      <label for="tipo_documento_id" class="form-label">Tipo de Documento *</label>
+      <select class="form-select" id="tipo_documento_id" formControlName="tipo_documento_id" (change)="fnObtenerLongitud()">
+        <option *ngFor="let item of lTipoDocumento" [value]="item.id">
+          {{ item.abrev_tipo_doc }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-4 col-lg-3 mb-3">
+      <label for="nro_documento" class="form-label">Nro. Documento * (Precionar Enter)</label>
+      <input
+        type="text"
+        id="nro_documento"
+        class="form-control"
+        placeholder="Ingrese Nro. Documento"
+        formControlName="nro_documento"
+        [ngClass]="{'is-invalid': formCliente.get('nro_documento')?.touched && formCliente.get('nro_documento')?.invalid}"
+        (keyup)="fnConsultarDocumento($event)"
+        />
+        <div class="invalid-feedback" *ngIf="formCliente.get('nro_documento')?.hasError('required')"> El Numero de Documento es requerido. </div>
+        <div class="invalid-feedback" *ngIf="formCliente.get('nro_documento')?.hasError('maxlength') || formCliente.get('nro_documento')?.hasError('minlength')"> El Numero de Documento debe contener {{ nro_longitud }} caracteres. </div>
+    </div>
+    <div class="col-md-4 col-lg-3 mb-3">
+      <label for="nombres" class="form-label">Nombres</label>
+      <input
+        type="text"
+        id="nombres"
+        class="form-control"
+        placeholder="Ingrese Nombres"
+        formControlName="nombres"
+        />
+    </div>
+    <div class="col-md-4 col-lg-3 mb-3">
+      <label for="apellidos" class="form-label">Apellidos</label>
+      <input
+        type="text"
+        id="apellidos"
+        class="form-control"
+        placeholder="Ingrese Apellidos"
+        formControlName="apellidos"
+        />
+    </div>
+    <div class="col-md-4 col-lg-4 mb-3">
+      <label for="razon_social" class="form-label">Razón Social</label>
+      <input
+        type="text"
+        id="razon_social"
+        class="form-control"
+        placeholder="Ingrese Razón Social"
+        formControlName="razon_social"
+        />
+    </div>
+    <div class="col-md-4 col-lg-4 mb-3">
+      <label for="direccion" class="form-label">Dirección</label>
+      <input
+        type="text"
+        id="direccion"
+        class="form-control"
+        placeholder="Ingrese Dirección"
+        formControlName="direccion"
+        />
+    </div>
+    <div class="col-md-4 col-lg-4 mb-3">
+      <label for="telefono" class="form-label">Telefono</label>
+      <input
+        type="text"
+        id="telefono"
+        class="form-control"
+        placeholder="Ingrese Telefono"
+        formControlName="telefono"
+        />
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">
+    Cancelar
+  </button>
+  <button type="submit" class="btn btn-primary" (click)="fnGuardarCliente()">Guardar</button>
+</div>

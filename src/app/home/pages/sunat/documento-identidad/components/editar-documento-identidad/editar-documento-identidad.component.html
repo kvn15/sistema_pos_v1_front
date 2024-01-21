@@ -1,0 +1,66 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="modalCenterTitle">Editar Documento Identidad</h5>
+  <button
+    type="button"
+    class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="frmDIdentidad" class="row">
+    <div class="col-md-6 mb-2">
+      <label for="cod_tipo_doc" class="form-label">Código Tipo de Documento *</label>
+      <input
+        type="text"
+        id="cod_tipo_doc"
+        class="form-control text-uppercase"
+        placeholder="Ingrese Código Tipo de Documento"
+        formControlName="cod_tipo_doc"
+        [ngClass]="{'is-invalid': frmDIdentidad.get('cod_tipo_doc')?.touched && frmDIdentidad.get('cod_tipo_doc')?.invalid}"
+        />
+        <div class="invalid-feedback" *ngIf="frmDIdentidad.get('cod_tipo_doc')?.hasError('required')"> El Código de Tipo Documento es requerido. </div>
+    </div>
+    <div class="col-md-6">
+      <label for="tipo_doc" class="form-label">Tipo de Documento *</label>
+      <input
+        type="text"
+        id="tipo_doc"
+        class="form-control text-uppercase"
+        placeholder="Ingrese Tipo de Documento"
+        formControlName="tipo_doc"
+        [ngClass]="{'is-invalid': frmDIdentidad.get('tipo_doc')?.touched && frmDIdentidad.get('tipo_doc')?.invalid}"
+        />
+        <div class="invalid-feedback" *ngIf="frmDIdentidad.get('tipo_doc')?.hasError('required')"> La Tipo de Documento es requerido. </div>
+    </div>
+    <div class="col-md-6">
+      <label for="abrev_tipo_doc" class="form-label">Abrev. Tipo de Documento *</label>
+      <input
+        type="text"
+        id="abrev_tipo_doc"
+        class="form-control text-uppercase"
+        placeholder="Ingrese Abrev. Tipo de Documento"
+        formControlName="abrev_tipo_doc"
+        [ngClass]="{'is-invalid': frmDIdentidad.get('abrev_tipo_doc')?.touched && frmDIdentidad.get('abrev_tipo_doc')?.invalid}"
+        />
+        <div class="invalid-feedback" *ngIf="frmDIdentidad.get('abrev_tipo_doc')?.hasError('required')"> La Abrev. Tipo de Documento es requerido. </div>
+    </div>
+    <div class="col-md-6">
+      <label for="long_tipo_doc" class="form-label">Longitud *</label>
+      <input
+        type="number"
+        id="long_tipo_doc"
+        class="form-control text-uppercase"
+        placeholder="Ingrese Longitud"
+        formControlName="long_tipo_doc"
+        [ngClass]="{'is-invalid': frmDIdentidad.get('long_tipo_doc')?.touched && frmDIdentidad.get('long_tipo_doc')?.invalid}"
+        />
+        <div class="invalid-feedback" *ngIf="frmDIdentidad.get('long_tipo_doc')?.hasError('required')"> La Longitud es requerido. </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">
+    Cancelar
+  </button>
+  <button type="submit" class="btn btn-primary" (click)="fnGuardar()">Guardar</button>
+</div>

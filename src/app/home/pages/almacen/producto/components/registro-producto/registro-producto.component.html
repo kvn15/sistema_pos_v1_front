@@ -1,0 +1,238 @@
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">Articulos /</span> Registro de Producto
+</h4>
+
+<form class="row" [formGroup]="formProducto" (submit)="fnGuardarProducto()">
+  <div class="col-12">
+    <div class="card">
+      <h5 class="card-header">Registro de Producto</h5>
+      <div class="card-body">
+
+        <div class="w-100">
+          <div class="row">
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3">
+              <label for="tipo_producto" class="form-label">Tipo Producto <span class="text-danger">*</span></label>
+              <select id="tipo_producto" class="form-select" formControlName="tipo_producto_id">
+                <option *ngFor="let item of lTipoProducto" [value]="item.id">
+                  {{ item.tipo_producto }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3">
+              <label for="categoria" class="form-label">Categoría <span class="text-danger">*</span></label>
+              <ng-select placeholder="Categoría" formControlName="categoria_id">
+                <ng-option *ngFor="let item of lCategoria" [value]="item.id">
+                  {{ item.name }}
+                </ng-option>
+              </ng-select>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3">
+              <label for="codigo_barras" class="form-label">Codígo de Barras <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="codigo_barras" placeholder="ASD54ASD465S" formControlName="codigo_barras" maxlength="50">
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3">
+              <label for="state" class="form-label">Estado</label>
+              <input type="text" class="form-control" id="state" formControlName="state_name" readonly>
+            </div>
+
+            <div class="col-12 col-md-4 mb-3">
+              <label for="nombre_producto" class="form-label">Nombre Producto <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="nombre_producto" placeholder="Panadol Forte" formControlName="nombre_producto" maxlength="300">
+            </div>
+
+            <div class="col-12 col-md-4 mb-3">
+              <label for="detalle_producto" class="form-label">Detalle Producto</label>
+              <input type="text" class="form-control" id="detalle_producto" placeholder="Alivia arrugas" formControlName="detalle_producto" maxlength="300">
+            </div>
+
+            <div class="col-12 col-md-4 mb-3">
+              <label for="proveedor" class="form-label">Proveedor</label>
+              <ng-select placeholder="Proveedor" formControlName="provedor_id">
+                <ng-option *ngFor="let item of lProveedor" [value]="item.id">
+                  {{ item.razon_social }}
+                </ng-option>
+              </ng-select>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3">
+              <label for="stock_inicial" class="form-label">Stock <span class="text-danger">*</span></label>
+              <input type="number" class="form-control" id="stock_inicial" placeholder="0" formControlName="stock_inicial">
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3">
+              <label for="stock_limite" class="form-label">Stock Limite</label>
+              <input type="number" class="form-control" id="stock_limite" placeholder="0" formControlName="stock_limite">
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3">
+              <label for="price_compra" class="form-label">Precio de Compra</label>
+              <input type="number" class="form-control" step="0.01" id="price_compra" placeholder="0.00" formControlName="price_compra">
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3">
+              <label for="tributo_sunat" class="form-label">Tributo Sunat <span class="text-danger">*</span></label>
+              <select id="tributo_sunat" class="form-select" formControlName="tributo_sunat_id">
+                <option>-- Seleccionar --</option>
+                <option *ngFor="let item of lTributoSunat" [value]="item.id">
+                  {{ item.nombre }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-12 mb-3">
+              <label class="form-label">Imagen Producto</label>
+              <div class="d-flex align-items-start align-items-sm-center gap-4">
+                <img
+                  [src]="imagen_previsualiza"
+                  alt="user-avatar"
+                  class="d-block rounded"
+                  height="100"
+                  width="100"
+                  id="uploadedAvatar" />
+                <div class="button-wrapper">
+                  <div class="d-flex">
+                    <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                      <span class="d-none d-sm-block">Subir nueva foto</span>
+                      <i class="bx bx-upload d-block d-sm-none"></i>
+                      <input
+                        type="file"
+                        id="upload"
+                        class="account-file-input"
+                        hidden
+                        accept="image/png, image/jpeg" (change)="fnProcesarImagen($event)"/>
+                    </label>
+                    <button *ngIf="imagen_previsualiza !== url_imagen" type="button" class="btn btn-secondary ms-1" style="align-self: flex-start;" (click)="fnQuitarImagen()">Quitar Imagen</button>
+                  </div>
+
+                  <p class="text-muted mb-0">Solo archivos JPG o PNG. Tamaño maxímo 4MB</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card mt-3">
+      <h5 class="card-header d-flex justify-content-between">
+        Unidades y Precio
+        <button type="button" class="btn btn-primary" (click)="fnAgregarUnidadMedida()"><i class='bx bx-plus'></i> Agregar Unidad</button>
+      </h5>
+      <div class="card-body">
+
+        <ng-container formArrayName="array_unidad_medida">
+
+          <ng-container *ngFor="let item of arrayFormUnidadMedida.controls; let i = index">
+            <div class="row" [formGroupName]="i">
+              <hr *ngIf="i > 0">
+              <div class="col-12 col-md-4 col-lg-3 mb-3">
+                <label for="marca" class="form-label">Unidad Medida <span class="text-danger">*</span></label>
+                <ng-select placeholder="Unidad Medida" formControlName="unidad_medida_id" (change)="fnValidadUnidadMedida($event, i)">
+                  <ng-option *ngFor="let item of lUnidadMedida" [value]="item.id">
+                    {{ item.name }}
+                  </ng-option>
+                </ng-select>
+              </div>
+
+              <div class="col-12 col-md-4 col-lg-3 mb-3">
+                <label for="stock_limite" class="form-label">Cantidad <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" id="stock_limite" placeholder="0" formControlName="cantidad_unidad">
+              </div>
+
+              <div class="col-12 col-md-4 col-lg-3 mb-3">
+                <label for="price_compra" class="form-label">Precio de Venta <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" step="0.01" id="price_compra" placeholder="0.00" formControlName="precio_venta_cantidad">
+              </div>
+
+              <div class="col-12 col-md-4 col-lg-3 mb-3 d-flex align-items-center" *ngIf="i > 0">
+                <button type="button" class="btn btn-danger w-100" (click)="fnEliminarUnidad(i)"><i class='bx bxs-trash-alt'></i> Eliminar Unidad</button>
+              </div>
+
+            </div>
+          </ng-container>
+
+        </ng-container>
+
+      </div>
+    </div>
+
+    <div class="card mt-3">
+      <h5 class="card-header">Datos Adicionales</h5>
+      <div class="card-body">
+
+        <div class="w-100">
+          <div class="row">
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3">
+              <label for="presentacion" class="form-label">Presentación</label>
+              <input type="text" class="form-control" id="presentacion" placeholder="Presentación" formControlName="presentacion" maxlength="300">
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3">
+              <label for="registro_sanitario" class="form-label">Registro Sanitario</label>
+              <input type="text" class="form-control" id="registro_sanitario" placeholder="Registro Sanitario" formControlName="registro_sanitario" maxlength="300">
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3">
+              <label for="lote" class="form-label">Lote</label>
+              <input type="text" class="form-control" id="lote" placeholder="Lote" formControlName="lote" maxlength="75">
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3">
+              <label for="fecha_vencimiento" class="form-label">Fecha de Vencimiento</label>
+              <input type="date" class="form-control" id="fecha_vencimiento" placeholder="Fecha de Vencimiento" formControlName="fecha_vencimiento">
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3">
+              <label for="marca" class="form-label">Marca</label>
+              <ng-select placeholder="Marca" formControlName="marca_id" (change)="fnChangeOtrosMarcaLaboratorio($event, true)">
+                <ng-option value="0">Otros</ng-option>
+                <ng-option *ngFor="let item of lMarca" [value]="item.id">
+                  {{ item.marca }}
+                </ng-option>
+              </ng-select>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3" *ngIf="bHabilitarMarca">
+              <label for="marca_otro" class="form-label">Escribir Marca <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="marca_otro" placeholder="Marca" formControlName="marca_otro" maxlength="255">
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3">
+              <label for="laboratorio" class="form-label">Laboratorio </label>
+              <ng-select placeholder="Laboratorio" formControlName="laboratorio_id" (change)="fnChangeOtrosMarcaLaboratorio($event, false)">
+                <ng-option value="0">OTROS</ng-option>
+                <ng-option *ngFor="let item of lLaboratorio" [value]="item.id">
+                  {{ item.laboratorio }}
+                </ng-option>
+              </ng-select>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3" *ngIf="bHabilitarLaboratorio">
+              <label for="laboratorio_otro" class="form-label">Escribir Laboratorio <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="laboratorio_otro" placeholder="Laboratorio" formControlName="laboratorio_otro"  maxlength="255">
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3 mb-3">
+              <label for="principio_activo" class="form-label">Principio Activo</label>
+              <input type="text" class="form-control" id="principio_activo" placeholder="Principio Activo" formControlName="principio_activo"  maxlength="350">
+            </div>
+
+            <div class="col-12 mt-2 d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary me-2">Guardar Producto</button>
+              <button type="button" class="btn btn-danger" (click)="fnRegresarLista()">Regresar a Lista</button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</form>

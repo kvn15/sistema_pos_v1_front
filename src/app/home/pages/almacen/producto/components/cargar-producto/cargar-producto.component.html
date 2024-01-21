@@ -1,0 +1,90 @@
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">Articulos /</span> Cargar Productos
+</h4>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <h5 class="card-header">
+        Cargar Productos (xlsx)
+      </h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <input type="file" class="form-control" (change)="fnLeerExcel($event)">
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="card" *ngIf="arrayFormExcel.controls.length > 0">
+      <h5 class="card-header">
+        <div class="d-flex justify-content-between">
+          Excel Cargado
+          <button type="button" class="btn btn-primary" (click)="fnGuardar()">Guardar en la Base de Datos</button>
+        </div>
+      </h5>
+      <div class="card-body">
+
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Codígo de Barras</th>
+                <th>Tipo Producto</th>
+                <th>Categoría</th>
+                <th>Nombre Producto</th>
+                <th>Proveedor</th>
+                <th>Stock</th>
+                <th>Stock Limte</th>
+                <th>Fecha Vencimiento</th>
+                <th>Detalle Unidad</th>
+              </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+              <ng-container [formGroup]="formExcel">
+                <ng-container formArrayName="excel_array">
+                  <ng-container *ngFor="let item of arrayFormExcel.controls; let i = index">
+                    <tr [formGroupName]="i">
+                      <td>
+                        <input type="text" class="form-control" style="font-size: 10px;" formControlName="codigo_barras" [ngClass]="{'btn-invalid': item.value.bCodigoBarra}">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" readonly style="font-size: 10px;" formControlName="tipo_producto">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" readonly style="font-size: 10px;" formControlName="categoria">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" readonly style="font-size: 10px;" formControlName="nombre_producto">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" readonly style="font-size: 10px;" formControlName="proveedor_ruc">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" readonly style="font-size: 10px;" formControlName="stock_inicial">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" readonly style="font-size: 10px;" formControlName="stock_limite">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" readonly style="font-size: 10px;" formControlName="fecha_vencimiento">
+                      </td>
+                      <td>
+                          <button class="btn btn-info">
+                            <i class='bx bx-detail'></i>
+                          </button>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

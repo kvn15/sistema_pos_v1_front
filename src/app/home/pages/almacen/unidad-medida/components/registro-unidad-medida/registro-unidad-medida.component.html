@@ -1,0 +1,63 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="modalCenterTitle">Agregar Unidad de Medida</h5>
+  <button
+    type="button"
+    class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<form [formGroup]="frmUnidadMedida" (submit)="fnGuardarUnidadMedida()" autocomplete="off">
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12 col-md-6 mb-3">
+        <label for="unidadMedida" class="form-label">Descripción *</label>
+        <input
+          type="text"
+          id="unidadMedida"
+          class="form-control"
+          placeholder="Ingrese Unidad de Medida"
+          formControlName="name"
+          [ngClass]="{'is-invalid': frmUnidadMedida.get('name')?.touched && frmUnidadMedida.get('name')?.hasError('required')}"
+          />
+          <ng-container *ngIf="frmUnidadMedida.get('name')?.touched">
+            <div class="invalid-feedback" *ngIf="frmUnidadMedida.get('name')?.hasError('required')"> La Descripción es requerida. </div>
+            <div class="invalid-feedback" *ngIf="frmUnidadMedida.get('name')?.hasError('maxlength')"> Solo se acepta hasta 250 caracteres. </div>
+          </ng-container>
+      </div>
+      <div class="col-12 col-md-6 mb-3">
+        <label for="abreviatura" class="form-label">Abreviatura *</label>
+        <input
+          type="text"
+          id="abreviatura"
+          class="form-control"
+          placeholder="Ingrese Abreviatura"
+          formControlName="abreviatura"
+          [ngClass]="{'is-invalid': frmUnidadMedida.get('abreviatura')?.touched && (frmUnidadMedida.get('abreviatura')?.hasError('required') || frmUnidadMedida.get('abreviatura')?.hasError('maxlength'))}"
+          />
+          <ng-container *ngIf="frmUnidadMedida.get('abreviatura')?.touched">
+            <div class="invalid-feedback" *ngIf="frmUnidadMedida.get('abreviatura')?.hasError('required')"> La Abreviatura es requerida. </div>
+            <div class="invalid-feedback" *ngIf="frmUnidadMedida.get('abreviatura')?.hasError('maxlength')"> Solo se acepta hasta 50 caracteres. </div>
+          </ng-container>
+      </div>
+      <div class="col-12">
+        <label for="abreviatura" class="form-label">Equivalencia *</label>
+        <input
+          type="number"
+          step="0.01"
+          id="equivalencia"
+          class="form-control"
+          placeholder="Ingrese Equivalencia"
+          formControlName="equivalencia"
+          [ngClass]="{'is-invalid': frmUnidadMedida.get('equivalencia')?.touched && frmUnidadMedida.get('equivalencia')?.hasError('pattern')}"
+          />
+          <ng-container *ngIf="frmUnidadMedida.get('equivalencia')?.touched">
+            <div class="invalid-feedback" *ngIf="frmUnidadMedida.get('equivalencia')?.hasError('pattern')"> Solo se Acepta 8 numeros y 2 decimales </div>
+          </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">
+      Cancelar
+    </button>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </div>
+</form>

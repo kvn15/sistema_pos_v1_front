@@ -1,0 +1,128 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="modalCenterTitle">Editar Proveedor</h5>
+  <button
+    type="button"
+    class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<form [formGroup]="frmProveedor" (submit)="fnGuardarProveedor()" autocomplete="off">
+  <div class="modal-body">
+    <div class="row">
+
+      <div class="col-12 col-md-6 mb-3">
+        <label for="ruc" class="form-label">RUC * (Enter para Consultar Ruc)</label>
+        <input
+          type="text"
+          id="ruc"
+          class="form-control"
+          placeholder="Ingrese Ruc"
+          formControlName="ruc"
+          (keyup)="fnConsultarRuc($event)"
+          [ngClass]="{'is-invalid': frmProveedor.get('ruc')?.touched && (frmProveedor.get('ruc')?.hasError('required') || frmProveedor.get('ruc')?.hasError('minlength') || frmProveedor.get('ruc')?.hasError('maxlength'))}"
+          />
+          <ng-container *ngIf="frmProveedor.get('ruc')?.touched">
+            <div class="invalid-feedback" *ngIf="frmProveedor.get('ruc')?.hasError('required')"> El Ruc es requerido. </div>
+            <div class="invalid-feedback" *ngIf="frmProveedor.get('ruc')?.hasError('minlength') || frmProveedor.get('ruc')?.hasError('maxlength')"> Solo se acepta 11 caracteres. </div>
+          </ng-container>
+      </div>
+
+      <div class="col-12 col-md-6 mb-3">
+        <label for="celular" class="form-label">Razon Social *</label>
+        <input
+          type="text"
+          id="razon_social"
+          class="form-control"
+          placeholder="Ingrese Razon Social"
+          formControlName="razon_social"
+          [ngClass]="{'is-invalid': frmProveedor.get('razon_social')?.touched && (frmProveedor.get('razon_social')?.hasError('required') || frmProveedor.get('razon_social')?.hasError('maxlength'))}"
+          />
+          <ng-container *ngIf="frmProveedor.get('razon_social')?.touched">
+            <div class="invalid-feedback" *ngIf="frmProveedor.get('razon_social')?.hasError('required')"> La Razón Social es requerida. </div>
+            <div class="invalid-feedback" *ngIf="frmProveedor.get('razon_social')?.hasError('maxlength')"> Solo se acepta 250 caracteres. </div>
+          </ng-container>
+      </div>
+
+      <div class="col-12 col-lg-4 mb-3">
+        <label for="departamento" class="form-label">Departamento</label>
+        <select class="form-select" id="departamento" formControlName="departamento" (change)="fnObtenerProvincia()">
+          <option selected="">-</option>
+          <option *ngFor="let departamento of lDepartamento" [value]="departamento.id_ubigeo">
+            {{ departamento.nombre_ubigeo }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-12 col-lg-4 mb-3">
+        <label for="provincia" class="form-label">Provincia</label>
+        <select class="form-select" id="provincia" formControlName="provincia" (change)="fnObtenerDistrito()">
+          <option selected="">-</option>
+          <option *ngFor="let provincia of lProvincia" [value]="provincia.id_ubigeo">
+            {{ provincia.nombre_ubigeo }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-12 col-lg-4 mb-3">
+        <label for="distrito" class="form-label">Distrito</label>
+        <select class="form-select" id="distrito" formControlName="distrito">
+          <option selected="">-</option>
+          <option *ngFor="let distrito of lDistrito" [value]="distrito.id_ubigeo">
+            {{ distrito.nombre_ubigeo }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-12 mb-3">
+        <label for="celular" class="form-label">Dirección *</label>
+        <input
+          type="text"
+          id="direccion"
+          class="form-control"
+          placeholder="Ingrese Dirección"
+          formControlName="direccion"
+          [ngClass]="{'is-invalid': frmProveedor.get('direccion')?.touched && frmProveedor.get('direccion')?.hasError('maxlength')}"
+          />
+          <ng-container *ngIf="frmProveedor.get('direccion')?.touched">
+            <div class="invalid-feedback" *ngIf="frmProveedor.get('direccion')?.hasError('maxlength')"> Solo se acepta 250 caracteres. </div>
+          </ng-container>
+      </div>
+
+      <div class="col-12 col-md-6 mb-3">
+        <label for="celular" class="form-label">Celular *</label>
+        <input
+          type="text"
+          id="celular"
+          class="form-control"
+          placeholder="Ingrese Celular"
+          formControlName="celular"
+          [ngClass]="{'is-invalid': frmProveedor.get('celular')?.touched && frmProveedor.get('celular')?.hasError('maxlength')}"
+          />
+          <ng-container *ngIf="frmProveedor.get('celular')?.touched">
+            <div class="invalid-feedback" *ngIf="frmProveedor.get('celular')?.hasError('maxlength')"> Solo se acepta 12 caracteres. </div>
+          </ng-container>
+      </div>
+
+      <div class="col-12 col-md-6 mb-3">
+        <label for="email" class="form-label">Correo Electronico *</label>
+        <input
+          type="text"
+          id="email"
+          class="form-control"
+          placeholder="Ingrese Correo Electronico"
+          formControlName="email"
+          [ngClass]="{'is-invalid': frmProveedor.get('email')?.touched && frmProveedor.get('email')?.hasError('email') || frmProveedor.get('email')?.hasError('email')}"
+          />
+          <ng-container *ngIf="frmProveedor.get('email')?.touched">
+            <div class="invalid-feedback" *ngIf="frmProveedor.get('email')?.hasError('email')"> Debe ser un Correo Electronico valido. </div>
+            <div class="invalid-feedback" *ngIf="frmProveedor.get('email')?.hasError('maxlength')"> Solo se acepta 250 caracteres. </div>
+          </ng-container>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">
+      Cancelar
+    </button>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </div>
+</form>
